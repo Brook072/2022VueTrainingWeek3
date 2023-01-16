@@ -123,6 +123,17 @@ function imageAdd() {
   }
 }
 
+function imageDelete() {
+  if (modalImageUrl.value === modalTarget.value.imageUrl) {
+    modalTarget.value.imageUrl = "";
+  } else {
+    let idx = modalTarget.value.imagesUrl.findIndex(
+      (item) => item === modalImageUrl.value
+    );
+    modalTarget.value.imagesUrl.splice(idx, 1);
+  }
+}
+
 function imageEdit() {
   if (imageOnChange.value === "main") {
     modalTarget.value.imageUrl = modalImageUrl.value;
@@ -276,7 +287,10 @@ getGoodsData();
                 </button>
               </div>
               <div>
-                <button class="btn btn-outline-danger btn-sm d-block w-100">
+                <button
+                  @click.prevent="imageDelete()"
+                  class="btn btn-outline-danger btn-sm d-block w-100"
+                >
                   刪除圖片
                 </button>
               </div>
