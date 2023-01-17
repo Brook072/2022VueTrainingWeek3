@@ -31,7 +31,7 @@ function getGoodsData() {
       goodsDataProcess();
     })
     .catch((err) => {
-      console.log(err);
+      alert(`${err.data.message}`);
     });
 }
 
@@ -46,13 +46,12 @@ function sendProductData() {
         }
       )
       .then((res) => {
-        console.log(res);
         getGoodsData();
         productModal.value.hide();
         alert(`${res.data.message}`);
       })
       .catch((err) => {
-        console.log(err);
+        alert(`${err.data.message}`);
       });
   } else {
     axios
@@ -64,13 +63,12 @@ function sendProductData() {
         }
       )
       .then((res) => {
-        console.log(res);
         getGoodsData();
         productModal.value.hide();
         alert(`${res.data.message}`);
       })
       .catch((err) => {
-        console.log(err);
+        alert(`${err.data.message}`);
       });
   }
 }
@@ -84,13 +82,12 @@ function deleteProduct() {
       }
     )
     .then((res) => {
-      console.log(res);
       getGoodsData();
       delProductModal.value.hide();
       alert(`${res.data.message}`);
     })
     .catch((err) => {
-      console.log(err);
+      alert(`${err.data.message}`);
     });
 }
 
@@ -101,7 +98,8 @@ function goodsDataProcess() {
 
 function modalDataRender(targetId) {
   modalTarget.value = "";
-  modalTarget.value = showData.value.find((item) => item.id === targetId);
+  modalTarget.value = goodsData.value.find((item) => item.id === targetId);
+  modalTarget.value = JSON.parse(JSON.stringify(modalTarget.value));
   modalImageUrl.value = modalTarget.value.imageUrl;
 }
 
@@ -334,7 +332,7 @@ getGoodsData();
                 <div class="mb-3 col-md-6">
                   <label for="origin_price" class="form-label">原價</label>
                   <input
-                    v-model="modalTarget.origin_price"
+                    v-model.number="modalTarget.origin_price"
                     id="origin_price"
                     type="number"
                     min="0"
@@ -345,7 +343,7 @@ getGoodsData();
                 <div class="mb-3 col-md-6">
                   <label for="price" class="form-label">售價</label>
                   <input
-                    v-model="modalTarget.price"
+                    v-model.number="modalTarget.price"
                     id="price"
                     type="number"
                     min="0"
